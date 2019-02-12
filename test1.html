@@ -105,17 +105,18 @@ $.getJSON('provinsi.geojson', function (data) {
     }
 }).addTo(map);
 		
-function getFeaturesInView() {
-  var features = [satker];
-  map.eachLayer( function(layer) {
-    if(layer instanceof L.Marker) {
-      if(map.getBounds().contains(layer.getLatLng())) {
-        features.push(layer.feature);
-      }
-    }
-  });
-  return features;
-}
+	var markersLayer = new L.LayerGroup();	//layer contain searched elements
+	map.addLayer(markersLayer);
+
+	////////////populate map from cities-italy.js
+	for(var i in satker)
+		L.marker(L.latLng(satker[i].loc), {title: satker[i].name}).addTo(markersLayer);
+
+	//TODO make example using label option with pop fields
+	
+	//inizialize Leaflet List Markers
+	var list = new L.Control.ListMarkers({layer: markersLayer, itemIcon: null});
+		map.addControl(list);
 	
 		 var searchControl = L.esri.Geocoding.geosearch().addTo(map);
   var results = L.layerGroup().addTo(map);
