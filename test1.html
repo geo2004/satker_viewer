@@ -94,7 +94,7 @@ var markersLayer = new L.LayerGroup();	//layer contain searched elements
 
 	////////////populate map from cities-italy.js
 	for(var i in satker)
-		L.marker(L.latLng(satker[i].loc), {title: satker[i].name}).addTo(markersLayer);
+		L.marker(L.latLng(satker[i].coordinates), {title: satker[i].name}).addTo(markersLayer);
 
 	//TODO make example using label option with pop fields
 	
