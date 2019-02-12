@@ -79,6 +79,19 @@ markers.on("click", function (event) {
 $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
+var markersLayer = new L.LayerGroup();	//layer contain searched elements
+	map.addLayer(markersLayer);
+
+	////////////populate map from cities-italy.js
+	for(var i in satker)
+		L.marker(L.latLng(satker[i].loc), {title: satker[i].name}).addTo(markersLayer);
+
+	//TODO make example using label option with pop fields
+	
+	//inizialize Leaflet List Markers
+	var list = new L.Control.ListMarkers({layer: markersLayer, itemIcon: null});
+		
+	
 	
           var map = L.map('map', {
 		center: [-3, 120],
@@ -105,18 +118,7 @@ $.getJSON('provinsi.geojson', function (data) {
     }
 }).addTo(map);
 		
-	var markersLayer = new L.LayerGroup();	//layer contain searched elements
-	map.addLayer(markersLayer);
-
-	////////////populate map from cities-italy.js
-	for(var i in satker)
-		L.marker(L.latLng(satker[i].loc), {title: satker[i].name}).addTo(markersLayer);
-
-	//TODO make example using label option with pop fields
-	
-	//inizialize Leaflet List Markers
-	var list = new L.Control.ListMarkers({layer: markersLayer, itemIcon: null});
-		map.addControl(list);
+	map.addControl(list);
 	
 		 var searchControl = L.esri.Geocoding.geosearch().addTo(map);
   var results = L.layerGroup().addTo(map);
