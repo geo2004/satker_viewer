@@ -65,18 +65,25 @@
     L.geoJson(data).addTo(satker);
   });    
 	
-	  var admin = L.layerGroup();
-	
-        // load GeoJSON from an external file
-  $.getJSON("provinsi.geojson",function(data){
-    // add GeoJSON layer to the map once the file is loaded
-    L.geoJson(data).addTo(admin);
-  }); 
+var markers = new L.geoJson(null, {
+    pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {})
+    }
+});
+
+markers.on("click", function (event) {
+    // Assuming the clicked feature is a shape, not a point marker.
+    map.fitBounds(event.layer.getBounds());
+});
+
+$.getJSON('provinsi.geojson', function (data) {
+     markers.addData(data)
+});
 	
           var map = L.map('map', {
 		center: [-7, 110],
 		zoom: 10,
-		layers: [streets, satker]
+		layers: [streets, markers, satker]
 	});
     	var baseLayers = {
 		"Grayscale ESRI": gray,
@@ -86,7 +93,7 @@
 	};
     
     var overlays = {
-	    "Batas Provinsi": admin,
+	    "Batas Provinsi": markers,
 	    "Lokasi Satuan Kerja Kementerian PUPR": satker,
 	};
     L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
