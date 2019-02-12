@@ -84,7 +84,11 @@
                }).addTo(satker);
          });
       });
-          
+        // load GeoJSON from an external file
+  $.getJSON("satker.geojson",function(data){
+    // add GeoJSON layer to the map once the file is loaded
+    L.geoJson(data).addTo(satker);
+  });    
           var map = L.map('map', {
 		center: [-7, 110],
 		zoom: 10,
