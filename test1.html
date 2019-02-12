@@ -81,8 +81,8 @@ $.getJSON('provinsi.geojson', function (data) {
 });
 	
           var map = L.map('map', {
-		center: [-7, 110],
-		zoom: 10,
+		center: [-3, 111],
+		zoom: 6,
 		layers: [streets, markers, satker]
 	});
     	var baseLayers = {
@@ -105,10 +105,7 @@ $.getJSON('provinsi.geojson', function (data) {
     }
 }).addTo(map);
 		
-admin.on("click", function (event) {
-    // Assuming the clicked feature is a shape, not a point marker.
-    map.fitBounds(event.layer.getBounds());
-});	
+
 	
   pkp.bindPopup(function (layer) {
     return L.Util.template('<p>{kondisi}<br>{propinsi}<br>{kecamatan}</p>', layer.feature.properties);
