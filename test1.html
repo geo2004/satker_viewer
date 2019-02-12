@@ -30,6 +30,7 @@
 <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 	<script src="L.Control.MousePosition.css" charset="utf-8"></script>
 	<script src="L.Control.MousePosition.js" charset="utf-8"></script>
+	<script src="../leaflet.sld.js"></script>
 
 <style>
     body { margin:0; padding:0; }
@@ -69,7 +70,22 @@
 	   useCors: true,
     layers: [0],
   });
-          
+ 
+    var satker = L.layerGroup();
+	
+      var geoJsonPromise = fetch('./satker.geojson');
+      var SLDPromise = fetch('./satker.sld');
+      Promise.all([geoJsonPromise, SLDPromise]).then(function(results) {
+         Promise.all([results[0].json(), results[1].text()])
+            .then(function(result) {
+               var geoJson = result[0];
+               var SLDText = result[1];
+               var SLDStyler = new L.SLDStyler(SLDText)
+               var geojsonLayer = L.geoJson(geoJson, {
+                  style: SLDStyler.getStyleFunction()
+               }).addTo(satker);
+         });
+      });
           
           var map = L.map('map', {
 		center: [-7, 110],
@@ -85,7 +101,7 @@
     
     var overlays = {
 	      "PKP": pkp,
-        "IPLT": iplt,
+        "Lokasi Satuan Kerja Kementerian PUPR": satker,
 	};
     L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
 	L.control.scale().addTo(map);
