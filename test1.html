@@ -80,6 +80,16 @@ $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
 var markersLayer = new L.LayerGroup();	//layer contain searched elements
+	
+		
+	
+	
+          var map = L.map('map', {
+		center: [-3, 120],
+		zoom: 5,
+		layers: [streets, markers, satker]
+	});
+	
 	map.addLayer(markersLayer);
 
 	////////////populate map from cities-italy.js
@@ -90,14 +100,6 @@ var markersLayer = new L.LayerGroup();	//layer contain searched elements
 	
 	//inizialize Leaflet List Markers
 	var list = new L.Control.ListMarkers({layer: markersLayer, itemIcon: null});
-		
-	
-	
-          var map = L.map('map', {
-		center: [-3, 120],
-		zoom: 5,
-		layers: [streets, markers, satker]
-	});
     	var baseLayers = {
 		"Grayscale ESRI": gray,
 		"Grayscale Mapbox": grayscale,
