@@ -55,45 +55,28 @@
 	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light'}),
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
-        
-          var pkp = L.esri.featureLayer({
-      url: "https://sigi.pu.go.id/portalpupr2/rest/services/SatuPeta/Peta_PKP/FeatureServer/0",
-      style: function (feature) {
-          return {color: '#55b4da', weight: 1 };
-      }
-  });
-         
- var iplt = L.esri.dynamicMapLayer({
-  url: 'https://sigi.pu.go.id/portalpupr2/rest/services/SatuPeta/Satu_Peta_IPLT/MapServer',
-	   useCors: true,
-    layers: [0],
-  });
- var url1 = 'https://geo2004.github.io/satker_viewer/satker.geojson';
- var url2 = 'https://geo2004.github.io/satker_viewer/satker.sld';
+ 
+
     var satker = L.layerGroup();
 	
-      var geoJsonPromise = fetch(url1);
-      var SLDPromise = fetch(url2);
-      Promise.all([geoJsonPromise, SLDPromise]).then(function(results) {
-         Promise.all([results[0].json(), results[1].text()])
-            .then(function(result) {
-               var geoJson = result[0];
-               var SLDText = result[1];
-               var SLDStyler = new L.SLDStyler(SLDText)
-               var geojsonLayer = L.geoJson(geoJson, {
-                  style: SLDStyler.getStyleFunction()
-               }).addTo(satker);
-         });
-      });
         // load GeoJSON from an external file
   $.getJSON("satker.geojson",function(data){
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(satker);
   });    
+	
+	  var admin = L.layerGroup();
+	
+        // load GeoJSON from an external file
+  $.getJSON("provinsi.geojson",function(data){
+    // add GeoJSON layer to the map once the file is loaded
+    L.geoJson(data).addTo(admin);
+  }); 
+	
           var map = L.map('map', {
 		center: [-7, 110],
 		zoom: 10,
-		layers: [streets, pkp]
+		layers: [streets, satker]
 	});
     	var baseLayers = {
 		"Grayscale ESRI": gray,
@@ -103,7 +86,6 @@
 	};
     
     var overlays = {
-	      "PKP": pkp,
         "Lokasi Satuan Kerja Kementerian PUPR": satker,
 	};
     L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
@@ -115,7 +97,10 @@
     }
 }).addTo(map);
 		
-	
+admin.on("click", function (event) {
+    // Assuming the clicked feature is a shape, not a point marker.
+    map.fitBounds(event.layer.getBounds());
+});	
 	
   pkp.bindPopup(function (layer) {
     return L.Util.template('<p>{kondisi}<br>{propinsi}<br>{kecamatan}</p>', layer.feature.properties);
