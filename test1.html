@@ -27,7 +27,7 @@
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.66.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 	<link rel="stylesheet" href="L.Control.MousePosition.css" charset="utf-8">
-	<script src="L.Control.MousePosition.js" charset="utf-8"></script>
+	<script src="./L.Control.MousePosition.js" charset="utf-8"></script>
 	<script src="./leaflet.sld.js"></script>
 
 <style>
@@ -105,7 +105,17 @@ $.getJSON('provinsi.geojson', function (data) {
     }
 }).addTo(map);
 		
-
+function getFeaturesInView() {
+  var features = [];
+  map.eachLayer( function(layer) {
+    if(layer instanceof L.Marker) {
+      if(map.getBounds().contains(layer.getLatLng())) {
+        features.push(layer.feature);
+      }
+    }
+  });
+  return features;
+}
 	
   pkp.bindPopup(function (layer) {
     return L.Util.template('<p>{kondisi}<br>{propinsi}<br>{kecamatan}</p>', layer.feature.properties);
