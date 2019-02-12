@@ -117,15 +117,6 @@ function getFeaturesInView() {
   return features;
 }
 	
-  pkp.bindPopup(function (layer) {
-    return L.Util.template('<p>{kondisi}<br>{propinsi}<br>{kecamatan}</p>', layer.feature.properties);
-  });
-	 iplt.bindPopup(function (error, featureCollection) {
-if(error || featureCollection.features.length === 0) {
-  return false;
-} else {
-  return 'Name: ' + featureCollection.features[0].properties.namobj;}
-}); 
 		 var searchControl = L.esri.Geocoding.geosearch().addTo(map);
   var results = L.layerGroup().addTo(map);
   searchControl.on('results', function(data){
