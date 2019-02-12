@@ -68,11 +68,12 @@
 	   useCors: true,
     layers: [0],
   });
- 
+ const url1 = 'https://geo2004.github.io/satker_viewer/satker.geojson';
+ const url2 = 'https://geo2004.github.io/satker_viewer/satker.sld';
     var satker = L.layerGroup();
 	
-      var geoJsonPromise = fetch('satker.geojson');
-      var SLDPromise = fetch('satker.sld');
+      var geoJsonPromise = fetch(url1);
+      var SLDPromise = fetch(url2);
       Promise.all([geoJsonPromise, SLDPromise]).then(function(results) {
          Promise.all([results[0].json(), results[1].text()])
             .then(function(result) {
