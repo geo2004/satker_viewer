@@ -84,7 +84,8 @@ markers.on("click", function (event) {
 $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
-    var satker = new L.geoJson(null,{
+    var satker;
+	satker = L.geoJson(null,{
  style: function (feature) {
       return {
         color: "#FF3192",
