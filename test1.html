@@ -64,7 +64,18 @@
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(satker);
   });    
-	
+satker.on('click', function (evt) {
+    var feature = evt.layer.feature,
+        props = feature.properties,
+        attrs = Object.keys(props),
+        attribute, value;
+
+    for (var i = 0; i < attrs.length; i += 1) {
+        attribute = attrs[i];
+        value = props[attribute];
+        // use the value to do something...
+    }
+});	
 var markers = new L.geoJson(null, {
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {})
