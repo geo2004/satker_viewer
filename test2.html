@@ -104,17 +104,17 @@ $.getJSON('provinsi.geojson', function (data) {
         }
       });
     }
-    featurelayer.on({
+    layer.on({
       mouseover: function (e) {
         var layer = e.target;
-        layer.setStyle({
+        e.layer.setStyle({
           weight: 3,
           color: "#00FFFF",
           opacity: 1
         });
       },
       mouseout: function (e) {
-        layer.resetStyle(e.target);
+        e.layer.resetStyle(e.target);
       }
     });
   }
