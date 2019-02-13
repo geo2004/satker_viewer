@@ -73,7 +73,7 @@ $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
 
-    var satker = = new L.geoJson(null,{
+    var satker = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {})
     }
