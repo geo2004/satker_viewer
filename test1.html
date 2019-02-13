@@ -64,7 +64,7 @@
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(satker);
   });    
-satker.on('click', function (evt) {
+data.on('click', function (evt) {
     var feature = evt.layer.feature,
         props = feature.properties,
         attrs = Object.keys(props),
