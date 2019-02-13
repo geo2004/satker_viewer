@@ -78,7 +78,7 @@ $.getJSON('provinsi.geojson', function (data) {
         return L.marker(latlng, {})
     }
 });  
-satker.on('click', function (evt) {
+satker.on("click", function (evt) {
     var feature = evt.layer.feature,
         props = feature.properties,
         attrs = Object.keys(props),
