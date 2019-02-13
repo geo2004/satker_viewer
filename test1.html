@@ -74,26 +74,47 @@ $.getJSON('provinsi.geojson', function (data) {
 });
 
     var satker = new L.geoJson(null,{
-    pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {})
-    }
-});  
-satker.on("click", function (event) {
-    var feature = event.layer.feature,
-        props = feature.properties,
-        attrs = Object.keys(props),
-        attribute, value;
+ style: function (feature) {
+      return {
+        color: "#FF3192",
+        weight: 3,
+        opacity: 1
+      };
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Satker</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Nomor</th><td>" + feature.properties.no + "</td></tr>" + "<tr><th>Kode Departemen</th><td>" + feature.properties.kddept + "</td></tr>" + "<tr><th>Kode Satker</th><td>" + feature.properties.kdsatker + "</td></tr>" + "<tr><th>Kode Lokasi</th><td>" + feature.properties.kdlokasi + "</td></tr>" + "<tr><th>Kode Kabupaten/Kota</th><td>" + feature.properties.kdkabkota + "</td></tr>" + "<tr><th>Kode Jenis Satker</th><td>" + feature.properties.kdjnssat + "</td></tr>" + "<table>";
+      layer.on({
+        click: function (e) {
+          $("#feature-title").html(feature.properties.NAME);
+          $("#feature-info").html(content);
+          $("#featureModal").modal("show");
 
-    for (var i = 0; i < attrs.length; i += 1) {
-        attribute = attrs[i];
-        value = props[attribute];
-        // use the value to do something...
+        }
+      });
     }
-});	
-	$.getJSON('satker.geojson', function (data) {
+    layer.on({
+      mouseover: function (e) {
+        var layer = e.target;
+        layer.setStyle({
+          weight: 3,
+          color: "#00FFFF",
+          opacity: 1
+        });
+        if (!L.Browser.ie && !L.Browser.opera) {
+          layer.bringToFront();
+        }
+      },
+      mouseout: function (e) {
+        operasi.resetStyle(e.target);
+      }
+    });
+  }
+  
+});	    
+$.getJSON('satker.geojson', function (data) {
      satker.addData(data)
-});		
-	
+});	
 	
           var map = L.map('map', {
 		center: [-3, 120],
