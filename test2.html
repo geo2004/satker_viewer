@@ -98,10 +98,10 @@ $.getJSON('provinsi.geojson', function (data) {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Satker</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Nomor</th><td>" + feature.properties.no + "</td></tr>" + "<tr><th>Kode Departemen</th><td>" + feature.properties.kddept + "</td></tr>" + "<tr><th>Kode Satker</th><td>" + feature.properties.kdsatker + "</td></tr>" + "<tr><th>Kode Lokasi</th><td>" + feature.properties.kdlokasi + "</td></tr>" + "<tr><th>Kode Kabupaten/Kota</th><td>" + feature.properties.kdkabkota + "</td></tr>" + "<tr><th>Kode Jenis Satker</th><td>" + feature.properties.kdjnssat + "</td></tr>" + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Satker</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>Nomor</th><td>" + feature.properties.No + "</td></tr>" + "<tr><th>Kode Departemen</th><td>" + feature.properties.kddept + "</td></tr>" + "<tr><th>Kode Satker</th><td>" + feature.properties.kdsatker + "</td></tr>" + "<tr><th>Kode Lokasi</th><td>" + feature.properties.kdlokasi + "</td></tr>" + "<tr><th>Kode Kabupaten/Kota</th><td>" + feature.properties.kdkabkota + "</td></tr>" + "<tr><th>Kode Jenis Satker</th><td>" + feature.properties.kdjnssat + "</td></tr>" + "<tr><th>Nomor Telepon</th><td>" + feature.properties.notelpon + "</td></tr>" + "<tr><th>Atasan</th><td>" + feature.properties.atasan + "</td></tr>" + "<tr><th>Atasan Langsung</th><td>" + feature.properties.atlas + "</td></tr>" + "<tr><th>Koordinator Wilayah</th><td>" + feature.properties.korwil + "</td></tr>" + "<tr><th>Kepala Satker</th><td>" + feature.properties.kasatker + "</td></tr>" + "<tr><th>NIP Kasatker</th><td>" + feature.properties.nipkasatke + "</td></tr>" + "<tr><th>No HP Kasatker</th><td>" + feature.properties.hpkasatker + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
+          $("#feature-title").html(feature.properties.kdsatker);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
         }
