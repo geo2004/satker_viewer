@@ -5717,7 +5717,12 @@ button.close {
 .bs-popover-left, .bs-popover-auto[x-placement^="left"] {
   margin-right: 0.5rem;
 }
-
+.center2 {
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 50%;
+}
 .bs-popover-left .arrow, .bs-popover-auto[x-placement^="left"] .arrow {
   right: calc((0.5rem + 1px) * -1);
   width: 0.5rem;
@@ -8979,11 +8984,5 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
-  .center2 {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
 }
 /*# sourceMappingURL=bootstrap.css.map */
