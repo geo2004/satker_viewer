@@ -124,7 +124,7 @@ $.getJSON('provinsi.geojson', function (data) {
       });
     }
 	layer.on({
-      popupclose: function (e) {
+      mouseup: function (e) {
         e.target.setIcon(new icon2);
       }
     });
