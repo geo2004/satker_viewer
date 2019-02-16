@@ -102,8 +102,7 @@ markers.on("click", function (event) {
 $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
-    var satker;
-	satker = L.geoJson(null,{
+    var satker = L.geoJson(null,{
  style: function (feature) {
       return {
         color: "#FF3192",
@@ -135,7 +134,30 @@ $.getJSON('provinsi.geojson', function (data) {
 $.getJSON('satker2.geojson', function (data) {
      satker.addData(data)
 });	
-	
+var prevLayerClicked = null;
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        click: function(e){
+            // If you have a layer inside  this variable
+            if (prevLayerClicked !== null) {
+                // Reset style
+                prevLayerClicked.setStyle({
+        color: "#FF3192",
+        weight: 3,
+        opacity: 1
+      });
+            }
+
+            // Do your things here
+            map.fitBounds(e.target.getBounds());
+            var layer = e.target;
+
+            // Store clicked layer into this variable
+            prevLayerClicked = layer;
+        }
+    });
+}
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
