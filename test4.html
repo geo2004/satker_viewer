@@ -115,17 +115,6 @@ $.getJSON('provinsi.geojson', function (data) {
       });
     }
 	layer.on({
-      mouseover: function (e) {
-        var layer = e.target;
-        layer.setStyle({
-          weight: 3,
-          color: "#00FFFF",
-          opacity: 1
-        });
-        if (!L.Browser.ie && !L.Browser.opera) {
-          layer.bringToFront();
-        }
-      },
       mouseout: function (e) {
         satker.resetStyle(e.target);
       }
