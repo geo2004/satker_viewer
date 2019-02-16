@@ -70,9 +70,16 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
-	var icon1 = L.Icon({
+	var icon1 = L.Icon.extend({
+		options: {
         iconUrl: "./marker-icon-2x-red.png",
         iconSize: [25,41],
+  	shadowUrl: "./marker-shadow.png",
+        shadowAnchor: [8, 20],
+        shadowSize: [25, 18],
+        iconSize: [20, 25],
+        iconAnchor: [8, 30] // horizontal puis vertical
+    }
 });
 
 var markers = new L.geoJson(null,{
@@ -104,7 +111,7 @@ $.getJSON('provinsi.geojson', function (data) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
-	  e.target.setIcon(icon1);
+	  e.target.setIcon(new icon1);
         }
       });
     }
