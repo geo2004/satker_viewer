@@ -5408,7 +5408,7 @@ button.close {
 
 .modal-title {
   margin-bottom: 0;
-  line-height: 1.5;
+  line-height: 1;
 }
 
 .modal-body {
@@ -5472,9 +5472,11 @@ button.close {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1;
   text-align: left;
   text-align: start;
+  img-align: right;
+  img-align: start;
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
@@ -5483,13 +5485,13 @@ button.close {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.875rem;
+  font-size: 0.575rem;
   word-wrap: break-word;
   opacity: 0;
 }
 
 .tooltip.show {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .tooltip .arrow {
