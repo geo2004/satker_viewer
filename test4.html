@@ -116,7 +116,7 @@ $.getJSON('provinsi.geojson', function (data) {
     }
 	layer.on({
       mouseout: function (e) {
-        satker.resetIcon(e.target);
+        e.target.resetIcon();
       }
     });
   }
