@@ -123,8 +123,8 @@ $.getJSON('provinsi.geojson', function (data) {
         }
       });
     }
-	layer.on({
-      mouseout: function (e) {
+	layer.off({
+      click: function (e) {
         e.target.setIcon(new icon2);
       }
     });
