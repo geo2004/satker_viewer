@@ -70,6 +70,11 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
+	var icon1 = L.icon({
+    iconUrl: 'marker-icon-2x-red.png',
+    iconSize: [20,20]
+});
+
 var markers = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {})
@@ -104,7 +109,10 @@ $.getJSON('provinsi.geojson', function (data) {
     }
   }
   
-});	    
+});
+satker.on('click', function (e) {
+   e.target.setIcon(icon1);
+});
 $.getJSON('satker2.geojson', function (data) {
      satker.addData(data)
 });	
