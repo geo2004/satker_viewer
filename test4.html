@@ -70,7 +70,7 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
-	var icon1 = L.Icon.extend({
+	var icon1 = L.Icon({
     options: {
         iconUrl: "./marker-icon-2x-red.png",
         iconSize: [25,41],
