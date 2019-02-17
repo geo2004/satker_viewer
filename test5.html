@@ -141,7 +141,7 @@ $.getJSON('provinsi.geojson', function (data) {
       click: function (e) {
       if (satker) {
         // Reset selected to default style
-         e.target.resetStyle(new icon1)
+         e.target.setIcon(new icon1)
       }
       // Assign new selected
       satker = e.layer
