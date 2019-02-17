@@ -99,39 +99,27 @@ markers.on("click", function (event) {
     // Assuming the clicked feature is a shape, not a point marker.
     map.fitBounds(event.layer.getBounds());
 });
+markers.on('click', function (e) {
+      // Check for selected
+      if (markers) {
+        // Reset selected to default style
+        e.target.resetStyle(markers)
+      }
+      // Assign new selected
+      markers = e.layer
+      // Bring selected to front
+      markers.bringToFront()
+      // Style selected
+      markers.setStyle({
+        'color': 'red'
+      })
+    });
+	
 $.getJSON('provinsi.geojson', function (data) {
      markers.addData(data)
 });
 	
-$.getJSON('provinsi.geojson', function (collection) {
 
-    var selected
-
-    // Create new geojson layer
-    new L.GeoJSON(collection, {
-      // Set default style
-      'style': function () {
-        return {
-          'color': 'yellow',
-        }
-      }
-    }).on('click', function (e) {
-      // Check for selected
-      if (selected) {
-        // Reset selected to default style
-        e.target.resetStyle(selected)
-      }
-      // Assign new selected
-      selected = e.layer
-      // Bring selected to front
-      selected.bringToFront()
-      // Style selected
-      selected.setStyle({
-        'color': 'red'
-      })
-    }).addTo(map)
-
-});	
     var satker = L.geoJson(null,{
  style: function (feature) {
       return {
