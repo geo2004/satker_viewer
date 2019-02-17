@@ -137,24 +137,24 @@ $.getJSON('provinsi.geojson', function (data) {
           $("#featureModal").modal("show");
         }
       });
-      layer.on({
-      click: function (e) {
-      if (satker) {
-        // Reset selected to default style
-         e.target.setIcon(new icon1)
-      }
-      // Assign new selected
-      satker = e.layer
-      // Style selected
-      satker.resetStyle();
-    }
-  });
   }
   }
 });	    
 $.getJSON('satker2.geojson', function (data) {
      satker.addData(data)
-});	
+});
+var clickedMarker;
+
+function clickFeature(e) {
+    if(clickedMarker) {
+          clickedMarker.setIcon(new Icon1);
+    }
+    var layer = e.target;
+    e.target.setIcon(stop);
+    clickedMarker = e.target;
+
+    info.update(layer.feature.properties);
+}	
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
