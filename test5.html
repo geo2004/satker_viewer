@@ -135,14 +135,13 @@ $.getJSON('provinsi.geojson', function (data) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
-	  e.target.setIcon(new icon1);
         }
       });
       layer.on({
       click: function (e) {
       if (satker) {
         // Reset selected to default style
-        e.target.resetStyle(satker)
+         e.target.setIcon(new icon1)
       }
       // Assign new selected
       satker = e.layer
