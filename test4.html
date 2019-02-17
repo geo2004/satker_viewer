@@ -136,7 +136,7 @@ $.getJSON('provinsi.geojson', function (data) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
-	  e.target.setIcon(new Icon1);
+	  e.target.setIcon(Icon1);
 	  e.target.setIcon(layer.options.icon == new icon1 ? stop :  new icon2);
         }
       });
