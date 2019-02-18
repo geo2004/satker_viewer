@@ -152,7 +152,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
       satker.bringToFront()
       // Style selected
       satker.setStyle({
-        'color': 'red'
+        'color': 'yellow'
       })
     });	    
   }
@@ -176,9 +176,8 @@ $.getJSON('satker3.geojson', function (data) {
 	};
     
     var overlays = {
-	       "Batas Provinsi": markers,
-	    "Lokasi Satuan Kerja Kementerian PUPR": satker,
-	
+	      "Lokasi Satuan Kerja Kementerian PUPR": satker,  
+	    "Batas Provinsi": markers,
 	};
     L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
 	L.control.scale().addTo(map);
