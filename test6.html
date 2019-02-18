@@ -122,7 +122,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
     var satker = L.geoJson(null,{
  style: function (feature, latlng) {
       return L.circleMarker(latlng, {
-        color: "#FF3192",
+        color: "red",
         weight: 3,
         opacity: 1
       });
@@ -143,10 +143,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
 $.getJSON('satker3.geojson', function (data) {
      satker.addData(data)
 });
-function clickFeature(e) {
-    var layer = e.target;
-    layer.setIcon(layer.options.icon == icon1 ? stop : icon1);
-}
+
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
