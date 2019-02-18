@@ -122,9 +122,11 @@ $.getJSON('Provinsi2.geojson', function (data) {
     var satker = L.geoJson(null,{
  pointToLayer: function (feature, latlng) {
       return L.circle(latlng, {
-        color: "red",
+        color: "green",
         weight: 3,
-        opacity: 1
+        opacity: 1,
+	stroke: "true",
+	radius: 200,
       });
   },
   onEachFeature: function (feature, layer) {
