@@ -70,26 +70,7 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
-	var icon1 = L.Icon.extend({
-		options: {
-        iconUrl: "./marker-icon-2x-red.png",
-        iconSize: [25,41],
-  	shadowUrl: "./marker-shadow.png",
-        shadowAnchor: [12, 41],
-        shadowSize: [41, 41],
-        iconAnchor: [12, 41] // horizontal puis vertical
-    }
-});
-	var icon2 = L.Icon.extend({
-		options: {
-        iconUrl: "./marker-icon-2x.png",
-        iconSize: [25,41],
-  	shadowUrl: "./marker-shadow.png",
-        shadowAnchor: [12, 41],
-        shadowSize: [41, 41],
-        iconAnchor: [12, 41] // horizontal puis vertical
-    }
-});
+
 var markers = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {})
@@ -109,7 +90,8 @@ markers.on('click', function (e) {
       markers = e.layer
       // Style selected
       markers.setStyle({
-        'color': 'red'
+        'color': 'red',
+	'pane': 'shadowPane',
       })
     });
 	
@@ -128,6 +110,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
 	fill: "true",
 	fillOpacity: 1,
 	fillColor: "green",
+	      pane: 'overlayPane',
       });
   },
   onEachFeature: function (feature, layer) {
