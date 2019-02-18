@@ -142,6 +142,21 @@ $.getJSON('Provinsi2.geojson', function (data) {
           $("#featureModal").modal("show");
         }
       });
+   satker.on('click', function (e) {
+      // Check for selected
+      if (satker) {
+        // Reset selected to default style
+        e.target.resetStyle(satker)
+      }
+      // Assign new selected
+      satker = e.layer
+      // Bring selected to front
+      satker.bringToFront()
+      // Style selected
+      satker.setStyle({
+        'color': 'red'
+      })
+    });	    
   }
   }
 });	    
