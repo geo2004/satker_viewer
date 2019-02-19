@@ -121,6 +121,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
+	  e.layer.bringToFront();
         }
       });
    satker.on('click', function (e) {
@@ -155,9 +156,8 @@ $.getJSON('satker3.geojson', function (data) {
 		layers: [streets,markers, satker]
 	});
 	
-map.createPane("satkers");
-map.getPane("satkers").style.zIndex = 999;
-satkers = satker;	
+map.createPane("satkers").style.zIndex = 999;
+	
     	var baseLayers = {
 		"Grayscale Mapbox": grayscale,
 		"Streets Mapbox": streets,
