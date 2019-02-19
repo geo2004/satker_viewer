@@ -110,7 +110,6 @@ $.getJSON('Provinsi2.geojson', function (data) {
 	fill: "true",
 	fillOpacity: 1,
 	fillColor: "green",
-	      pane: 'overlayPane',
       });
   },
   onEachFeature: function (feature, layer) {
@@ -121,7 +120,6 @@ $.getJSON('Provinsi2.geojson', function (data) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
-	  e.layer.bringToFront();
         }
       });
    satker.on('click', function (e) {
@@ -153,10 +151,9 @@ $.getJSON('satker3.geojson', function (data) {
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
-		layers: [streets,markers, satker]
+		layers: [streets]
 	});
 	
-map.createPane("satkers").style.zIndex = 999;
 	
     	var baseLayers = {
 		"Grayscale Mapbox": grayscale,
