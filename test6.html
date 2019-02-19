@@ -123,8 +123,6 @@ $.getJSON('Provinsi2.geojson', function (data) {
           $("#featureModal").modal("show");
         }
       });
-   var currentPane = map.createPane('pane');
-                currentPane.style.zIndex = 10000;
    satker.on('click', function (e) {
       // Check for selected
       if (satker) {
@@ -157,7 +155,9 @@ $.getJSON('satker3.geojson', function (data) {
 		layers: [streets,markers, satker]
 	});
 	
-	
+map.createPane("satkers");
+map.getPane("satkers").style.zIndex = 999;
+satkers = satker;	
     	var baseLayers = {
 		"Grayscale Mapbox": grayscale,
 		"Streets Mapbox": streets,
