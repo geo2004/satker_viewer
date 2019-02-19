@@ -70,7 +70,8 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
-
+	
+var layer2 = L.layerGroup(undefined, {optionTosort: 3});
 var markers = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {})
@@ -98,7 +99,9 @@ markers.on('click', function (e) {
 $.getJSON('Provinsi2.geojson', function (data) {
      markers.addData(data)
 });
-	
+	markers.addTo(layer2);
+
+	var layer1 = L.layerGroup(undefined, {optionTosort: 9});
     var satker = L.geoJson(null,{
  pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, {
@@ -147,11 +150,12 @@ $.getJSON('Provinsi2.geojson', function (data) {
 $.getJSON('satker3.geojson', function (data) {
      satker.addData(data)
 });
+	satker.addTo(layer1);
 
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
-		layers: [streets]
+		layers: [streets, markers, satker]
 	});
 	
 	
@@ -162,10 +166,16 @@ $.getJSON('satker3.geojson', function (data) {
 	};
     
     var overlays = {
-	    "Batas Provinsi": markers,  
-	    "Lokasi Satuan Kerja Kementerian PUPR": satker,  
+	    "Batas Provinsi": layer2,  
+	    "Lokasi Satuan Kerja Kementerian PUPR": layer1,  
 	};
-    L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
+    L.control.layers(baseLayers,overlays,{
+    	    sortLayers: true,
+    	    sortFunction: function (a, b) {
+ 	     return a.options.optionTosort - b.options.optionTosort;
+    }
+    },
+	    {collapsed: true}).addTo(map);
 	
 	L.control.scale().addTo(map);
   var lc = L.control.locate({
