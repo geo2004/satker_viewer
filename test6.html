@@ -170,7 +170,6 @@ $.getJSON('satker3.geojson', function (data) {
 	};
     L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
 	
-	  satker.setZIndex(5);
 	L.control.scale().addTo(map);
   var lc = L.control.locate({
     position: 'topleft',
