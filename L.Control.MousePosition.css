@@ -2,10 +2,11 @@
 {
   background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 0 10px #007bff;
-  margin:1;
+  padding:3px;
+  margin:0;
   color: #333;
   font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
   position: fixed;
-  left: 47%;
-  top: 97%;
+  left: 43%;
+  top: 95%;
 }
