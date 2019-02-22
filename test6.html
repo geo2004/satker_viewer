@@ -67,7 +67,12 @@
 	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light'}),
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
- 
+
+  var map = L.map('map', {
+		center: [-3, 120],
+		zoom: 5,
+		layers: [streets]
+	});	
 // Create necessary panes in correct order (i.e. "bottom-most" first).
 map.createPane("polygonsPane");
 map.createPane("pointsPane");
@@ -152,11 +157,7 @@ $.getJSON('satker3.geojson', function (data) {
 });
 
 
-          var map = L.map('map', {
-		center: [-3, 120],
-		zoom: 5,
-		layers: [streets, markers, satker]
-	});
+        
 	
 	
     	var baseLayers = {
