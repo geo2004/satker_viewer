@@ -68,11 +68,13 @@
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
  
+// Create necessary panes in correct order (i.e. "bottom-most" first).
+map.createPane("polygonsPane");
+map.createPane("pointsPane");
 	
-var layer2 = L.layerGroup(undefined, {optionTosort: 3});
 var markers = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {})
+        return L.marker(latlng, {pane: "polygonsPane"})
     }
 });
 markers.on("click", function (event) {
@@ -90,16 +92,15 @@ markers.on('click', function (e) {
       // Style selected
       markers.setStyle({
         'color': 'red',
-	pane: 'shadowPane',
       })
     });
 	
 $.getJSON('Provinsi2.geojson', function (data) {
      markers.addData(data)
 });
-	markers.addTo(layer2);
 
-	var layer1 = L.layerGroup(undefined, {optionTosort: 9});
+
+
     var satker = L.geoJson(null,{
  pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, {
@@ -111,6 +112,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
 	fill: "true",
 	fillOpacity: 1,
 	fillColor: "green",
+	pane: "pointsPane"
       });
   },
   onEachFeature: function (feature, layer) {
@@ -148,12 +150,12 @@ $.getJSON('Provinsi2.geojson', function (data) {
 $.getJSON('satker3.geojson', function (data) {
      satker.addData(data)
 });
-	satker.addTo(layer1);
+
 
           var map = L.map('map', {
 		center: [-3, 120],
 		zoom: 5,
-		layers: [streets, layer2, layer1]
+		layers: [streets, markers, satker]
 	});
 	
 	
@@ -164,15 +166,11 @@ $.getJSON('satker3.geojson', function (data) {
 	};
     
     var overlays = {
-	    "Batas Provinsi": layer2,  
-	    "Lokasi Satuan Kerja Kementerian PUPR": layer1,  
+	     "Lokasi Satuan Kerja Kementerian PUPR": satkers,  
+	    "Batas Provinsi": markers,  
+	  
 	};
-    L.control.layers(baseLayers,overlays,{
-    	    sortLayers: true,
-    	    sortFunction: function (a, b) {
- 	     return a.options.optionTosort - b.options.optionTosort;
-    }
-    },
+    L.control.layers(baseLayers,overlays,{},
 	    {collapsed: true}).addTo(map);
 	
 	L.control.scale().addTo(map);
