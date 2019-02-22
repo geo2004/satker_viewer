@@ -104,7 +104,7 @@ $.getJSON('Provinsi2.geojson', function (data) {
      markers.addData(data)
 });
 
-
+markers.addTo(map);
 
     var satker = L.geoJson(null,{
  pointToLayer: function (feature, latlng) {
@@ -156,6 +156,7 @@ $.getJSON('satker3.geojson', function (data) {
      satker.addData(data)
 });
 
+satker.addTo(map);
 
         
 	
