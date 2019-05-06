@@ -11,12 +11,10 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
 
-    
-	<!-- Load Esri Leaflet from CDN -->
+<!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js"
     integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g=="
-    crossorigin=""></script>
-	
+    crossorigin=""></script>	
   <!-- Load Esri Leaflet Geocoder from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.css"
     integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
@@ -69,30 +67,18 @@
 	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light'}),
 		streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
         satellites  = L.tileLayer(mbUrl, {id: 'mapbox.satellite'});
- 
-	var icon1 = L.Icon.extend({
-		options: {
-        iconUrl: "./marker-icon-2x-red.png",
-        iconSize: [25,41],
-  	shadowUrl: "./marker-shadow.png",
-        shadowAnchor: [12, 41],
-        shadowSize: [41, 41],
-        iconAnchor: [12, 41] // horizontal puis vertical
-    }
-});
-	var icon2 = L.Icon.extend({
-		options: {
-        iconUrl: "./marker-icon-2x.png",
-        iconSize: [25,41],
-  	shadowUrl: "./marker-shadow.png",
-        shadowAnchor: [12, 41],
-        shadowSize: [41, 41],
-        iconAnchor: [12, 41] // horizontal puis vertical
-    }
-});
+  var map = L.map('map', {
+		center: [-3, 120],
+		zoom: 5,
+		layers: [streets]
+	});	
+// Create necessary panes in correct order (i.e. "bottom-most" first).
+map.createPane("polygonsPane");
+map.createPane("pointsPane");
+	
 var markers = new L.geoJson(null,{
     pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, {})
+        return L.marker(latlng, {pane: "polygonsPane"})
     }
 });
 markers.on("click", function (event) {
@@ -107,51 +93,67 @@ markers.on('click', function (e) {
       }
       // Assign new selected
       markers = e.layer
-      // Bring selected to front
-      markers.bringToFront()
       // Style selected
       markers.setStyle({
-        'color': 'red'
+        'color': 'red',
       })
     });
 	
-$.getJSON('provinsi.geojson', function (data) {
+$.getJSON('Provinsi2.geojson', function (data) {
      markers.addData(data)
 });
-	
-
+markers.addTo(map);
     var satker = L.geoJson(null,{
- style: function (feature) {
-      return {
-        color: "#FF3192",
+ pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, {
+        color: "white",
         weight: 3,
-        opacity: 1
-      };
+        opacity: 1,
+	stroke: "true",
+	radius: 8,
+	fill: "true",
+	fillOpacity: 1,
+	fillColor: "green",
+	pane: "pointsPane"
+      });
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-     var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th colspan='2'>" +  '<img src="'+ feature.properties.FOTO +'" style="width:100px;height:100px;">'+ "</th></tr>" + "<tr><th>Kepala Satker</th><td>" + feature.properties.kasatker + "</td></tr>" + "<tr><th>NIP Kasatker</th><td>" + feature.properties.nipkasatke +"</td></tr>" + "<tr><th>Nama Satker</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>No HP Kasatker</th><td>" + feature.properties.hpkasatker + "</td></tr>" + "<tr><th>Nomor Telepon</th><td>" + feature.properties.notelpon + "</td></tr>" + "</td></tr>" + "<tr><th>Provinsi</th><td>" + feature.properties.NMLOKASI + "</td></tr>" + "<tr><th>Kabupaten/Kota</th><td>" + feature.properties.NMKABKOTA + "<table>";
+    var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th colspan='2'>" +  '<img src="'+ feature.properties.FOTO +'" style="width:100px;height:100px;">'+ "</th></tr>" + "<tr><th>Kepala Satker</th><td>" + feature.properties.kasatker + "</td></tr>" + "<tr><th>NIP Kasatker</th><td>" + feature.properties.nipkasatke +"</td></tr>" + "<tr><th>Nama Satker</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.address + "</td></tr>" + "<tr><th>No HP Kasatker</th><td>" + feature.properties.hpkasatker + "</td></tr>" + "<tr><th>Nomor Telepon</th><td>" + feature.properties.notelpon + "</td></tr>" + "</td></tr>" + "<tr><th>Provinsi</th><td>" + feature.properties.NMLOKASI + "</td></tr>" + "<tr><th>Kabupaten/Kota</th><td>" + feature.properties.NMKABKOTA + "<table>";
       layer.on({
         click: function (e) {
           $("#feature-title").html(feature.properties.NAME);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
-	  e.target.setIcon(new icon1);
         }
       });
-    }
+   satker.on('click', function (e) {
+      // Check for selected
+      if (satker) {
+        // Reset selected to default style
+        e.target.resetStyle(satker)
+      }
+      // Assign new selected
+      satker = e.layer
+      // Bring selected to front
+      satker.bringToFront()
+      // Style selected
+      satker.setStyle({
+        'color': '#FE2CE9',
+	      'fill': 'true',
+	'fillOpacity': 1,
+	'fillColor': '#70F38D',
+      })
+    });	    
   }
-});
-
-$.getJSON('satker2.geojson', function (data) {
-     satker.addData(data)
+  }
 });	
-
-          var map = L.map('map', {
-		center: [-3, 120],
-		zoom: 5,
-		layers: [streets, markers, satker]
-	});
+	
+$.getJSON('Lokasi_Satker_2019.geojson', function (data) {
+     satker.addData(data)
+});
+satker.addTo(map);
+        
 	
 	
     	var baseLayers = {
@@ -161,10 +163,13 @@ $.getJSON('satker2.geojson', function (data) {
 	};
     
     var overlays = {
-	    "Batas Provinsi": markers,
-	    "Lokasi Satuan Kerja Kementerian PUPR": satker,
+	     "Lokasi Satuan Kerja Kementerian PUPR": satker,  
+	    "Batas Provinsi": markers,  
+	  
 	};
-    L.control.layers(baseLayers,overlays,{}, {collapsed: true}).addTo(map);
+    L.control.layers(baseLayers,overlays,{},
+	    {collapsed: true}).addTo(map);
+	
 	L.control.scale().addTo(map);
   var lc = L.control.locate({
     position: 'topleft',
